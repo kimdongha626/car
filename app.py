@@ -15,7 +15,11 @@ st.markdown("<h1 style='text-align: center; color: #2E86C1;'>🚗 Used Car Price
 
 # 데이터 불러오기
 DATA_PATH = "car_data.csv"   # Kaggle에서 받은 CSV 파일
-data = pd.read_csv(DATA_PATH)
+try:
+    data = pd.read_csv(DATA_PATH)
+except FileNotFoundError:
+    st.error("❌ car_data.csv 파일을 찾을 수 없습니다. Kaggle에서 다운로드 후 같은 폴더에 넣어주세요.")
+    st.stop()
 
 # 탭 구조
 tab1, tab2, tab3 = st.tabs(["📊 데이터 탐색", "📈 모델 비교", "🔍 가격 예측"])
@@ -29,11 +33,13 @@ with tab1:
     st.write(data.describe())
 
     st.subheader("연료 종류별 평균 판매 가격")
-    fuel_price = data.groupby("Fuel_Type")["Selling_Price"].mean()
-    st.bar_chart(fuel_price)
+    if "Fuel_Type" in data.columns:
+        fuel_price = data.groupby("Fuel_Type")["Selling_Price"].mean()
+        st.bar_chart(fuel_price)
 
     st.subheader("연식 vs 판매 가격")
-    st.line_chart(data.groupby("Year")["Selling_Price"].mean())
+    if "Year" in data.columns:
+        st.line_chart(data.groupby("Year")["Selling_Price"].mean())
 
 # -------------------- TAB 2: 모델 비교 --------------------
 with tab2:
