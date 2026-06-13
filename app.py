@@ -14,7 +14,7 @@ st.set_page_config(page_title="Used Car Price Prediction", layout="wide")
 st.markdown("<h1 style='text-align: center; color: #2E86C1;'>🚗 Used Car Price Prediction Dashboard</h1>", unsafe_allow_html=True)
 
 # 데이터 불러오기
-DATA_PATH = "car_data.csv"   # Kaggle에서 받은 CSV 파일
+DATA_PATH = "CarPrice_Assignment.csv"   # Kaggle에서 받은 CSV 파일
 try:
     data = pd.read_csv(DATA_PATH)
 except FileNotFoundError:
